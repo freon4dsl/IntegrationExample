@@ -1,0 +1,9 @@
+{
+  "name": "flowbite-app",
+  "private": true,
+  "workspaces": [
+    "packages/dsl",
+    "packages/webapp"
+  ],
+  "version": "1.0.0"
+}
