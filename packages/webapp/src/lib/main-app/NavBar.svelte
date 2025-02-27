@@ -39,7 +39,7 @@
 				<Tooltip placement="bottom">Dark/Light Mode</Tooltip>
 				<Button
 					name="View on GitHub"
-					href="https://github.com/freon4dsl/FlowbiteApp"
+					href="https://github.com/freon4dsl/IntegrationExample"
 					target="_blank"
 				>
 					<GitHub />
