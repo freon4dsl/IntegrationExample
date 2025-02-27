@@ -2,7 +2,7 @@
 This repo contains an example of how to integrate a Freon editor into a custom webpage.
 
 Note, this is not a complete web application. Many aspects still need to be implemented, but all of these depend on 
-how exactly your web application should look like and how it should function. The aim of this repo is to 
+how exactly your web application should look like, and on how it should function. The aim of this repo is to 
 give you some pointers on how and were to use
 functionality from the Freon `core` and `core-svelte` packages. Of course, you can use the UI and CSS libraries 
 of your choice.

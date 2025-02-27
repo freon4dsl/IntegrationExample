@@ -1,4 +1,3 @@
-// all possible projections
 // the projections that are currently chosen to be shown
 export let projectionsShown: string[] = $state([]);
 
