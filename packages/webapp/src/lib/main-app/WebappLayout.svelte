@@ -10,6 +10,7 @@
 	import { WebappConfigurator } from '$lib/language';
 	import { progressIndicatorShown, noUnitAvailable, serverInfo } from '$lib/stores/ModelInfo.svelte.js';
 	import { dialogs } from '$lib/stores/WebappStores.svelte';
+	import { FreonComponent } from '@freon4dsl/core-svelte';
 	import OpenModelDialog from '$lib/dialogs/OpenModelDialog.svelte';
 
 	let transitionParams = {
@@ -54,8 +55,8 @@
       marking down below does not function. -->
 </div>
 
-<div style="height: 1000px;"
-	class="flex items-center justify-center bg-primary-50 dark:bg-gray-700 dark:text-white pb-16 sm:mb-12 sm:mt-12 md:mb-20 md:mt-20 lg:mb-20 lg:mt-20 xl:mb-20 xl:mt-20"
+<div
+	 class="h-full flex items-center justify-center bg-primary-50 dark:bg-gray-700 dark:text-white pb-16 sm:mb-12 sm:mt-12 md:mb-20 md:mt-20 lg:mb-20 lg:mt-20 xl:mb-20 xl:mt-20"
 >
 	<div class='bg-white m-4 dark:bg-gray-700 dark:text-white'>
 		{#if (noUnitAvailable.value)}
@@ -65,8 +66,7 @@
 				</div>
 			</div>
 		{:else}
-<!--			<FreonComponent editor={WebappConfigurator.getInstance().editorEnvironment?.editor} />-->
-			<p>Editor comes here</p>
+			<FreonComponent editor={WebappConfigurator.getInstance().editorEnvironment?.editor} />
 			<div class="text-center {hidden}" ><Spinner /></div>
 		{/if}
 	</div>
