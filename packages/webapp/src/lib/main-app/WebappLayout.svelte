@@ -1,17 +1,50 @@
 <script lang="ts">
-	import { FooterLink, FooterLinkGroup } from 'flowbite-svelte';
+	import { FooterLink, FooterLinkGroup, Spinner } from 'flowbite-svelte';
 	import { Drawer, CloseButton } from 'flowbite-svelte';
 	import { sineIn } from 'svelte/easing';
 	import NavBar from '$lib/main-app/NavBar.svelte';
 	import { drawerHidden } from '$lib/stores/WebappStores.svelte';
 	import ModelInfo from '$lib/main-app/ModelInfo.svelte';
 	import { Footer, FooterCopyright } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
+	import { WebappConfigurator } from '$lib/language';
+	import { progressIndicatorShown, noUnitAvailable, serverInfo } from '$lib/stores/ModelInfo.svelte.js';
+	import { dialogs } from '$lib/stores/WebappStores.svelte';
+	import OpenModelDialog from '$lib/dialogs/OpenModelDialog.svelte';
 
 	let transitionParams = {
 		x: 320,
 		duration: 200,
 		easing: sineIn
 	};
+
+	let hidden: string = $derived(progressIndicatorShown.value ? '' : 'hidden');
+
+	onMount(async () => {
+		// If a model is given as parameter, open this model
+		// A new model is created when this model does not exist
+		const urlParams = new URLSearchParams(window.location.search);
+		const model = urlParams.get('model');
+		if (model !== null) {
+			openModel(model);
+		} else {
+			// No model given as parameter, open the dialog to ask for it
+			// Get list of models from server
+			const names = await WebappConfigurator.getInstance().getAllModelNames();
+			if (!!names && names.length > 0) {
+				// Make the names available for the dialog
+				serverInfo.allModelNames = names;
+			}
+
+			// open the app with the open/new model dialog
+			dialogs.openModelDialogVisible = true;
+		}
+	});
+
+	async function openModel(model: string) {
+		let comm = WebappConfigurator.getInstance();
+		await comm.openModel(model);
+	}
 </script>
 
 <NavBar />
@@ -24,7 +57,19 @@
 <div style="height: 1000px;"
 	class="flex items-center justify-center bg-primary-50 dark:bg-gray-700 dark:text-white pb-16 sm:mb-12 sm:mt-12 md:mb-20 md:mt-20 lg:mb-20 lg:mt-20 xl:mb-20 xl:mt-20"
 >
-	<p>Editor comes here</p>
+	<div class='bg-white m-4 dark:bg-gray-700 dark:text-white'>
+		{#if (noUnitAvailable.value)}
+			<div class="message">
+				<div class="mdc-typography--subtitle1">
+					Please, select, create, or import Unit to be shown.
+				</div>
+			</div>
+		{:else}
+<!--			<FreonComponent editor={WebappConfigurator.getInstance().editorEnvironment?.editor} />-->
+			<p>Editor comes here</p>
+			<div class="text-center {hidden}" ><Spinner /></div>
+		{/if}
+	</div>
 </div>
 
 <Footer
@@ -65,3 +110,12 @@
 	</div>
 	<ModelInfo />
 </Drawer>
+
+<OpenModelDialog/>
+
+
+<style>
+	.hidden {
+		display: none;
+	}
+</style>
