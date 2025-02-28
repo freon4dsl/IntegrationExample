@@ -5,7 +5,7 @@ import {
     FreProjectionHandler,
     FreUndoManager,
     InMemoryModel,
-    type IServerCommunication, isNullOrUndefined
+    type IServerCommunication, isNullOrUndefined, type ModelUnitIdentifier
 } from '@freon4dsl/core';
 import {replaceProjectionsShown} from "$lib/stores/Projections.svelte.js";
 import {langInfo} from "$lib/stores/LanguageInfo.svelte.js";
@@ -55,7 +55,7 @@ export class WebappConfigurator {
 
     /**
      * Fills the Webapp Stores with initial values that describe the language,
-     * and make sure that the editor is able to get user message to the webapp.
+     * and make sure that the editor is able to get user messages to the webapp.
      */
     static initialize(editorEnvironment: FreEnvironment): void {
         let langEnv: FreEnvironment = editorEnvironment;
@@ -100,7 +100,7 @@ export class WebappConfigurator {
         if (!!this.modelStore) {
             // create new model instance in memory and set its name
             await this.modelStore.openModel(modelName);
-            const unitIdentifiers = this.modelStore.getUnitIdentifiers();
+            const unitIdentifiers: ModelUnitIdentifier[] = this.modelStore.getUnitIdentifiers();
             LOGGER.log('unit identifiers: ' + JSON.stringify(unitIdentifiers));
             if (!!unitIdentifiers && unitIdentifiers.length > 0) {
                 // load the first unit and show it
@@ -144,8 +144,7 @@ export class WebappConfigurator {
     }
 
     /**
-     * This function takes care of actually showing the new unit in the editor
-     * and getting the validation errors, if any, and show them in the error list.
+     * This function takes care of actually showing the new unit in the editor.
      * @param newUnit
      * @private
      */

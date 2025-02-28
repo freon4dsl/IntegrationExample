@@ -72,6 +72,7 @@
                     {#if unit.freLanguageConcept() === unitType}
                         <div class="flex justify-between">
                             {unit.name}
+                            <!-- Instead of DotsHorizontalOutline we could use ChevronDownOutline-->
                             <DotsHorizontalOutline class="dots-menu1 inline dark:text-white"/>
                         </div>
                         <Dropdown triggeredBy=".dots-menu1">
@@ -86,5 +87,4 @@
             </Listgroup>
         </ListgroupItem>
     {/each}
-    <!-- Instead of DotsHorizontalOutline we could use ChevronDownOutline-->
 </Listgroup>

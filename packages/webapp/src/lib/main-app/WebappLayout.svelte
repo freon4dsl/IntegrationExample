@@ -27,7 +27,7 @@
 		const urlParams = new URLSearchParams(window.location.search);
 		const model = urlParams.get('model');
 		if (model !== null) {
-			openModel(model);
+			await WebappConfigurator.getInstance().openModel(model);
 		} else {
 			// No model given as parameter, open the dialog to ask for it
 			// Get list of models from server
@@ -36,16 +36,11 @@
 				// Make the names available for the dialog
 				serverInfo.allModelNames = names;
 			}
-
-			// open the app with the open/new model dialog
+			// Open the open/new model dialog
 			dialogs.openModelDialogVisible = true;
 		}
 	});
 
-	async function openModel(model: string) {
-		let comm = WebappConfigurator.getInstance();
-		await comm.openModel(model);
-	}
 </script>
 
 <NavBar />
