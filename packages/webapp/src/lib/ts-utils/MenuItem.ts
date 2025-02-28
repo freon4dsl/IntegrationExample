@@ -6,6 +6,11 @@ export class MenuItem {
 }
 
 export class ProjectionItem {
-  name: string = "";
-  selected: boolean = false;
+    name: string = "";
+    selected: boolean = false;
+
+    constructor(name: string, selected: boolean) {
+        this.name = name;
+        this.selected = selected;
+    }
 }
